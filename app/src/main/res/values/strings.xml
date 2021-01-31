@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">INCIApp</string>
-    <string name="hintbtnTrue">REMEMBERED</string>
-    <string name="hintbtnFalse">REVIEW</string>
+    <string name="hintbtnTrue">I DONT</string>
+    <string name="hintbtnFalse">I KNEW IT</string>
     <string name="btnLearn">LEARN</string>
     <string name="hintTvNumberOfQuesion">Question</string>
 

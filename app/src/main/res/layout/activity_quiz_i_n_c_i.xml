@@ -6,33 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".QuizINCIActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardFront"
-        android:layout_width="300sp"
-        android:layout_height="200sp"
-        android:layout_marginRight="30sp"
-        android:layout_marginLeft="30sp"
-        android:layout_marginTop="30sp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="25sp"
-        app:cardElevation="10sp"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardBack"
-        android:layout_width="300sp"
-        android:layout_height="200sp"
-        android:layout_marginRight="30sp"
-        android:layout_marginLeft="30sp"
-        android:layout_marginTop="30sp"
-        android:alpha="0"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:cardBackgroundColor="@color/black"
-        app:cardCornerRadius="25sp"
-        app:cardElevation="10sp"
-        >
+    <com.wajahatkarim3.easyflipview.EasyFlipView
+        android:layout_width="match_parent"
+        android:layout_height="267dp"
+        app:autoFlipBack="true"
+        app:autoFlipBackTime="10000"
+        app:flipDuration="700"
+        app:flipEnabled="true"
+        app:flipFrom="front"
+        app:flipOnTouch="true"
+        app:flipType="vertical">
+
+        <!-- Back Layout Goes Here -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBack"
+            android:layout_width="300sp"
+            android:layout_height="200sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            android:alpha="0"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="25sp"
+            app:cardElevation="10sp" />
+
+
+        <!-- Front Layout Goes Here -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFront"
+            android:layout_width="300sp"
+            android:layout_height="200sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="25sp"
+            app:cardElevation="10sp" />
+
+
+    </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +67,7 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -52,13 +52,23 @@
     </com.wajahatkarim3.easyflipview.EasyFlipView>
 
 
-
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <Button
+            android:id="@+id/btnFalse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hintbtnFalse"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnNext"
+            app:layout_constraintHorizontal_bias="0.108"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.896" />
 
         <Button
             android:id="@+id/btnTrue"
@@ -67,20 +77,21 @@
             android:text="@string/hintbtnTrue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.108"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.839"
+            app:layout_constraintStart_toEndOf="@+id/btnNext"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.896" />
 
         <Button
-            android:id="@+id/btnFalse"
+            android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hintbtnFalse"
+            android:text="@string/hintBtnShowNext"
+            android:onClick="onBtnNextClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.839"
-            app:layout_constraintStart_toStartOf="@+id/btnTrue"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.896" />
     </androidx.constraintlayout.widget.ConstraintLayout>

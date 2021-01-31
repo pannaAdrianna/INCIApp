@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.List;
+
 import static android.widget.Toast.LENGTH_LONG;
 
 public class QuizINCIActivity extends AppCompatActivity {
@@ -17,7 +19,7 @@ public class QuizINCIActivity extends AppCompatActivity {
     Button btnNext;
     private CardView card;
 
-    private Flashcard[] deckOfFlashcards;
+    private List<Flashcard> deckOfFlashcards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

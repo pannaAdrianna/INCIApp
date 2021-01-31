@@ -5,15 +5,13 @@ public class Flashcard {
    final String definition;
    final String label;
    private boolean remembered;
-   private int repeated;
 
 
-    public Flashcard(int id, String definition, String label, boolean remembered, int repeated) {
+    public Flashcard(int id, String definition, String label) {
         this.id = id;
         this.definition = definition;
         this.label = label;
-        this.remembered = remembered;
-        this.repeated = repeated;
+        this.remembered = false;
     }
 
     public int getId() {
@@ -40,11 +38,5 @@ public class Flashcard {
         this.remembered = remembered;
     }
 
-    public int getRepeated() {
-        return repeated;
-    }
 
-    public void setRepeated(int repeated) {
-        this.repeated = repeated;
-    }
 }

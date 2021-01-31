@@ -31,7 +31,18 @@
             android:alpha="0"
             app:cardBackgroundColor="@color/blueLight"
             app:cardCornerRadius="25sp"
-            app:cardElevation="10sp" />
+            app:cardElevation="10sp">
+
+            <TextView
+                android:id="@+id/tvDefinition"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="@color/white" />
+        </androidx.cardview.widget.CardView>
 
 
         <!-- Front Layout Goes Here -->
@@ -46,7 +57,18 @@
             android:layout_marginRight="30sp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="25sp"
-            app:cardElevation="10sp" />
+            app:cardElevation="10sp">
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:foregroundGravity="center"
+                android:gravity="center|center_vertical"
+                android:text="TextView"
+                android:textColor="@color/black" />
+        </androidx.cardview.widget.CardView>
 
 
     </com.wajahatkarim3.easyflipview.EasyFlipView>
@@ -86,8 +108,8 @@
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hintBtnShowNext"
             android:onClick="onBtnNextClick"
+            android:text="@string/hintBtnShowNext"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

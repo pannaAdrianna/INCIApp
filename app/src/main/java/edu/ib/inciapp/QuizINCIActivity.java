@@ -1,7 +1,9 @@
 package edu.ib.inciapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +13,7 @@ public class QuizINCIActivity extends AppCompatActivity {
 
     private Button btnTrue;
     private Button btnFalse;
-    private TextView question;
+    private CardView card;
 
     private Flashcard[] deckOfFlashcards;
 
@@ -32,5 +34,11 @@ public class QuizINCIActivity extends AppCompatActivity {
     }
 
     public void onCardCLick(View view) {
+        try {
+            card.setCardBackgroundColor(Color.BLUE);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

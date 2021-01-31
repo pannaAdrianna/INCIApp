@@ -3,6 +3,7 @@
     <string name="hintbtnTrue">I KNEW IT</string>
     <string name="hintbtnFalse">I DONT</string>
     <string name="btnLearn">LEARN</string>
+    <string name="hintBtnOCR">OCR</string>
     <string name="hintBtnShowNext">NEXT</string>
     <string name="hintTvNumberOfQuesion">Question</string>
 

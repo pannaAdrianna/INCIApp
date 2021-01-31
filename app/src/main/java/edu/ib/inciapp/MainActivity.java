@@ -61,4 +61,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QuizINCIActivity.class);
         this.startActivity(intent);
     }
+
+    public void onBtnOCRClick(View view) {
+        Intent intent = new Intent(this, OCRActivity.class);
+        this.startActivity(intent);
+    }
 }

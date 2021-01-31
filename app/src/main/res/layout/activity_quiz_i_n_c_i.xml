@@ -9,6 +9,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="300sp"
         android:layout_height="200sp"
+        android:layout_marginRight="30sp"
+        android:layout_marginLeft="30sp"
+        android:layout_marginTop="30sp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:cardBackgroundColor="@color/white"
@@ -28,5 +31,36 @@
                 android:text="TextView"
                 android:textColor="@color/white" />
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnTrue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hintbtnTrue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.108"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.896" />
+
+        <Button
+            android:id="@+id/btnFalse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hintbtnFalse"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.839"
+            app:layout_constraintStart_toStartOf="@+id/btnTrue"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.896" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>

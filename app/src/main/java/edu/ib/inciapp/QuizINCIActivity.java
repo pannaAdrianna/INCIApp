@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -25,10 +26,9 @@ public class QuizINCIActivity extends AppCompatActivity {
     TextView tvFront;
     TextView tvBack;
     private int currentCard;
-    private CardView card;
+    private int lengthOfDeck;
     SQLiteDatabase database;
 
-    private List<Flashcard> deckOfFlashcards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +61,16 @@ public class QuizINCIActivity extends AppCompatActivity {
             insertStatement.bindString(2, "brak zastrzeżeń");
             insertStatement.executeInsert();
 
+            insertStatement.bindString(1, "Alanine");
+            insertStatement.bindString(2, "Brak klasyfikacji jako substancja niebezpieczna zgodnie z przepisami chemicznymi");
+            insertStatement.executeInsert();
+
 
         } else {
             List<Flashcard> list = new ArrayList<>();
+            lengthOfDeck = list.size();
+            randomFlashcard();
+
             Cursor c = database.rawQuery("SELECT DISTINCT Name, Description FROM INCI", null);
 
             if (c.moveToFirst()) {
@@ -79,8 +86,8 @@ public class QuizINCIActivity extends AppCompatActivity {
 
             }
 
-            tvFront.setText(list.get(0).getLabel());
-            tvBack.setText(list.get(0).getDescription());
+            tvFront.setText(list.get(currentCard).getLabel());
+            tvBack.setText(list.get(currentCard).getDescription());
             c.close();
 
 
@@ -96,12 +103,17 @@ public class QuizINCIActivity extends AppCompatActivity {
             });
             btnNext.setOnClickListener(v -> {
                 Toast.makeText(this, "Next Question Please", LENGTH_LONG).show();
+                randomFlashcard();
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
 
+    private void randomFlashcard() {
+        Random random = new Random();
+        currentCard = random.nextInt(lengthOfDeck+1);
     }
 
 

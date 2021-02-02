@@ -1,30 +1,14 @@
 package edu.ib.inciapp;
 
 public class Flashcard {
-    private int id;
-    final String label;
+    private String label;
+    final String function;
     final String description;
-    private boolean remembered;
 
-
-    public Flashcard(String label, String description) {
+    public Flashcard(String label, String function, String description) {
         this.label = label;
+        this.function = function;
         this.description = description;
-    }
-
-    public Flashcard(int id, String label, String description, boolean remembered) {
-        this.id = id;
-        this.label = label;
-        this.description = description;
-        this.remembered = remembered;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -35,13 +19,17 @@ public class Flashcard {
         return label;
     }
 
-    public boolean isRemembered() {
-        return remembered;
+    public String getFunction() {
+        return function;
     }
 
-    public void setRemembered(boolean remembered) {
-        this.remembered = remembered;
+    public String getBackgroundDescrpition(){
+        return function+" "+description;
     }
 
+    @Override
+    public String toString() {
+        return "Label:" + label + "function: " + function + "description: " + description;
 
+    }
 }

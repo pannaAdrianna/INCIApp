@@ -45,7 +45,7 @@ public class QuizINCIActivity extends AppCompatActivity {
 
         List<Flashcard> list = new ArrayList<>();
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
-        String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Description VARCHAR)";
+        String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);
 
         String sqlCount = "SELECT count(*) FROM INCI";
@@ -56,15 +56,17 @@ public class QuizINCIActivity extends AppCompatActivity {
 
         if (lengthOfDeck == 0) {
             Toast.makeText(this, "Add data", Toast.LENGTH_LONG).show();
-            String sqlIngredient = "INSERT INTO INCI VALUES (?,?)";
+            String sqlIngredient = "INSERT INTO INCI VALUES (?,?,?)";
             SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
 
             insertStatement.bindString(1, "Aqua");
-            insertStatement.bindString(2, "brak zastrzeżeń");
+            insertStatement.bindString(2, "funkcja");
+            insertStatement.bindString(3, "brak zastrzeżeń");
             insertStatement.executeInsert();
 
             insertStatement.bindString(1, "Alanine");
-            insertStatement.bindString(2, "Brak klasyfikacji jako substancja niebezpieczna zgodnie z przepisami chemicznymi");
+            insertStatement.bindString(2, "funkcja");
+            insertStatement.bindString(3, "Brak klasyfikacji jako substancja niebezpieczna zgodnie z przepisami chemicznymi");
             insertStatement.executeInsert();
             lengthOfDeck = list.size();
 
@@ -74,23 +76,24 @@ public class QuizINCIActivity extends AppCompatActivity {
             Log.i("Number of Flashcards", String.valueOf(lengthOfDeck));
             randomFlashcard();
 
-            Cursor c = database.rawQuery("SELECT DISTINCT Name, Description FROM INCI", null);
+            Cursor c = database.rawQuery("SELECT DISTINCT Name, Function, Description FROM INCI", null);
 
             if (c.moveToFirst()) {
 
                 do {
                     String name = c.getString(c.getColumnIndex("Name"));
+                    String function = c.getString(c.getColumnIndex("Function"));
                     String description = c.getString(c.getColumnIndex("Description"));
 
-                    Flashcard temp = new Flashcard(name, description);
+                    Flashcard temp = new Flashcard(name, function, description);
                     list.add(temp);
 
                 } while (c.moveToNext());
 
             }
 
-            tvFront.setText(list.get(currentCard).getLabel());
-            tvBack.setText(list.get(currentCard).getDescription());
+            tvFront.setText(list.get(0).getLabel());
+            tvBack.setText(list.get(0).getBackgroundDescrpition());
             c.close();
 
 
@@ -116,7 +119,7 @@ public class QuizINCIActivity extends AppCompatActivity {
 
     private void randomFlashcard() {
         Random random = new Random();
-        currentCard = random.nextInt(lengthOfDeck+1);
+        currentCard = random.nextInt(lengthOfDeck + 1);
     }
 
 

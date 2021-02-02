@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tv=(TextView) findViewById(R.id.textView);
 
-/*
-        String path = "in.xsl";
+
+      /*  String path = "in.xls";
         File file = new File(path);
         List<Flashcard> flashcardList = new ArrayList<>();
         try {
@@ -37,11 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
             while ((line = bf.readLine()) != null) {
                 String[] lineSplit = line.split("\t");
-                String definition = lineSplit[0];
+                String description = lineSplit[0];
                 String label = lineSplit[1];
 
-
-                Flashcard tempFlashcard = new Flashcard(counter, definition, label);
+                Flashcard tempFlashcard = new Flashcard( label,description);
                 flashcardList.add(tempFlashcard);
                 counter++;
             }
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        tv.setText(flashcardList.get(0).getDefinition());
+        tv.setText(flashcardList.get(0).getDescription());
 */
 
     }

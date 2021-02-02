@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class QuizINCIActivity extends AppCompatActivity {
         tvFront = (TextView) findViewById(R.id.tvName);
         tvBack = (TextView) findViewById(R.id.tvDescription);
 
+        List<Flashcard> list = new ArrayList<>();
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
         String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Description VARCHAR)";
         database.execSQL(sqlDB);
@@ -49,10 +51,10 @@ public class QuizINCIActivity extends AppCompatActivity {
         String sqlCount = "SELECT count(*) FROM INCI";
         Cursor cursor = database.rawQuery(sqlCount, null);
         cursor.moveToFirst();
-        int liczba = cursor.getInt(0);
+        lengthOfDeck = cursor.getInt(0);
         cursor.close();
 
-        if (liczba == 0) {
+        if (lengthOfDeck == 0) {
             Toast.makeText(this, "Add data", Toast.LENGTH_LONG).show();
             String sqlIngredient = "INSERT INTO INCI VALUES (?,?)";
             SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
@@ -64,11 +66,12 @@ public class QuizINCIActivity extends AppCompatActivity {
             insertStatement.bindString(1, "Alanine");
             insertStatement.bindString(2, "Brak klasyfikacji jako substancja niebezpieczna zgodnie z przepisami chemicznymi");
             insertStatement.executeInsert();
+            lengthOfDeck = list.size();
 
 
         } else {
-            List<Flashcard> list = new ArrayList<>();
             lengthOfDeck = list.size();
+            Log.i("Number of Flashcards", String.valueOf(lengthOfDeck));
             randomFlashcard();
 
             Cursor c = database.rawQuery("SELECT DISTINCT Name, Description FROM INCI", null);

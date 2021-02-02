@@ -17,6 +17,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     TextView tv;
+//    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         tv=(TextView) findViewById(R.id.textView);
 
 /*
-        String path = "in.xslx";
+        String path = "in.xsl";
         File file = new File(path);
         List<Flashcard> flashcardList = new ArrayList<>();
         try {
@@ -50,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
 //        tv.setText(flashcardList.get(0).getDefinition());
-
+*/
 
     }
 

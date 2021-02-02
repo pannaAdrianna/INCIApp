@@ -2,16 +2,21 @@ package edu.ib.inciapp;
 
 public class Flashcard {
     private int id;
-   final String definition;
-   final String label;
-   private boolean remembered;
+    final String label;
+    final String description;
+    private boolean remembered;
 
 
-    public Flashcard(int id, String definition, String label) {
-        this.id = id;
-        this.definition = definition;
+    public Flashcard(String label, String description) {
         this.label = label;
-        this.remembered = false;
+        this.description = description;
+    }
+
+    public Flashcard(int id, String label, String description, boolean remembered) {
+        this.id = id;
+        this.label = label;
+        this.description = description;
+        this.remembered = remembered;
     }
 
     public int getId() {
@@ -22,8 +27,8 @@ public class Flashcard {
         this.id = id;
     }
 
-    public String getDefinition() {
-        return definition;
+    public String getDescription() {
+        return description;
     }
 
     public String getLabel() {

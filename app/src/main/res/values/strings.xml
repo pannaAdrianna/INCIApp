@@ -7,5 +7,10 @@
     <string name="hintBtnShowNext">NEXT</string>
     <string name="hintTvNumberOfQuesion">Question</string>
     <string name="hintGetDataBtn">SEARCH FOR INGREDIENT</string>
+    <string name="hintETIncianalyzer">Paste your INCI here</string>
+    <string name="hintBtnAnalyze">ANALYZE</string>
+    <string name="tvINCIpaste">INGREDIENTS:</string>
+    <string name="hintTvControversial">Add ingredients and click Analyze button to start analyzing</string>
+    <string name="hintTvResultControversial">Result</string>
 
 </resources>

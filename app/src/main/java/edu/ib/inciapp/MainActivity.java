@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
     public void onBtnSearchIngredient(View view) {
-        Intent intent = new Intent(this, CheckIngredientsActivity.class);
+//        Intent intent = new Intent(this, CheckIngredientsActivity.class);
+        Intent intent = new Intent(this, AnalyzeCosmeticActivity.class);
         this.startActivity(intent);
     }
 

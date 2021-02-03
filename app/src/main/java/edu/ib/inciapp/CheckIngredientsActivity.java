@@ -40,7 +40,6 @@ public class CheckIngredientsActivity extends AppCompatActivity {
         searchView = findViewById(R.id.search_bar);
 
 
-        List<Flashcard> list = new ArrayList<>();
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
         String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);

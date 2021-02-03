@@ -54,8 +54,8 @@ public class QuizINCIActivity extends AppCompatActivity {
 
 
         if (lengthOfDeck == 0) {
-/*            Toast.makeText(this, "Add data", Toast.LENGTH_LONG).show();
-            String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
+          Toast.makeText(this, "No data", Toast.LENGTH_LONG).show();
+         /*     String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
             SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
 
             insertStatement.bindString(1, "Aqua");

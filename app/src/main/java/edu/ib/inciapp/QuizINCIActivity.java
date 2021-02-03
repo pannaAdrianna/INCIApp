@@ -98,29 +98,21 @@ public class QuizINCIActivity extends AppCompatActivity {
 
         }
 
-
-/*        try {
-            btnNext.setOnClickListener(v -> {
-                Toast.makeText(this, "Next Question Please", LENGTH_LONG).show();
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
     }
 
     private int randomFlashcard(int range) {
         Random random = new Random();
+        Log.i("RANDOM", String.valueOf(currentCard));
+        Log.i("length", String.valueOf(lengthOfDeck));
         return random.nextInt(range + 1);
+
 
     }
 
 
     public void onBtnNextClick(View view) {
-        Log.i("RANDOM", String.valueOf(currentCard));
-        Log.i("length", String.valueOf(lengthOfDeck));
         tvFront.setText(list.get(randomFlashcard(lengthOfDeck)).getLabel());
         tvBack.setText(list.get(randomFlashcard(lengthOfDeck)).getBackgroundDescrpition());
+
     }
 }

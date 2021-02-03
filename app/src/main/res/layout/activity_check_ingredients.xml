@@ -4,24 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckIngredientsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".CheckIngredientsActivity">
 
 
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listView"
-        android:layout_weight="1"
-        ></ListView>
-
-    <Button
+    <SearchView
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hintGetDataBtn"
+        android:layout_margin="2sp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search ingredient"></SearchView>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"></ListView>
+
+    <Button
         android:id="@+id/button2"
-        android:onClick="onBtnExcelClick"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onBtnExcelClick"
+        android:text="@string/hintGetDataBtn" />
 
 
 </LinearLayout>

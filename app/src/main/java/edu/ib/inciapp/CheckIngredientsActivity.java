@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,13 +25,20 @@ import java.util.List;
 public class CheckIngredientsActivity extends AppCompatActivity {
     SQLiteDatabase database;
     private int lengthOfDeck;
-    List<Flashcard> list = new ArrayList<>();
-//    TextView tvDisplay = (TextView) findViewById(R.id.tvDisplay);
+
+
+    ListView listView;
+    SearchView searchView;
+    ArrayAdapter<String> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_ingredients);
+
+        searchView = findViewById(R.id.search_bar);
+
 
         List<Flashcard> list = new ArrayList<>();
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
@@ -41,84 +50,62 @@ public class CheckIngredientsActivity extends AppCompatActivity {
         cursor.moveToFirst();
         lengthOfDeck = cursor.getInt(0);
         cursor.close();
-    }
 
-
-
-    public void onBtnExcelClick(View view) {
-        readData();
 
         ArrayList<String> wyniki = new ArrayList<>();
-        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI",null);
+        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI", null);
 
-        if(c.moveToFirst()){
+        if (c.moveToFirst()) {
 
             do {
-                String name= c.getString(c.getColumnIndex("Name"));
+                String name = c.getString(c.getColumnIndex("Name"));
                 String function = c.getString(c.getColumnIndex("Function"));
-                String description= c.getString(c.getColumnIndex("Description"));
+                String description = c.getString(c.getColumnIndex("Description"));
 
-                wyniki.add(name+": "+function+" "+description);
+                wyniki.add(name + ": " + function + " " + description);
 
-            } while(c.moveToNext());
+            } while (c.moveToNext());
         }
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,wyniki);
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, wyniki);
         listView.setAdapter(adapter);
-        c.close();
-    }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(CheckIngredientsActivity.this, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //ustawienie filtrów
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
 
-    private void readData() {
-
-        InputStream is = getResources().openRawResource(R.raw.data);
-        // Reads text from character-input stream, buffering characters for efficient reading
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, Charset.forName("UTF-8"))
-        );
-
-        // Initialization
-        String line = "";
-
-        // Initialization
-        try {
-            // Step over headers
-            reader.readLine();
-
-            // If buffer is not empty
-            while ((line = reader.readLine()) != null) {
-                Log.d("MyActivity", "Line: " + line);
-                // use comma as separator columns of CSV
-                String[] lineSplit = line.split(";");
-                // Read the data
-                String label = lineSplit[0];
-                String function = lineSplit[1];
-                String description = lineSplit[2];
-
-
-                String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
-                SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
-
-                insertStatement.bindString(1, label);
-                insertStatement.bindString(2, function);
-                insertStatement.bindString(3, description);
-                insertStatement.executeInsert();
-
-                // Adding object to a class
-                Flashcard temp = new Flashcard(label, function,description);
-                list.add(temp);
-                // Log the object
-                Log.d("My Activity", "Just created: " + temp);
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                CheckIngredientsActivity.this.adapter.getFilter().filter(query);
+                return false;
             }
 
-        } catch (IOException e) {
-            // Logs error with priority level
-            Log.wtf("MyActivity", "Error reading data file on line" + line, e);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                CheckIngredientsActivity.this.adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
-            // Prints throwable details
-            e.printStackTrace();
-        }
+
+        c.close();
+
+
     }
+
+
+
+
+
+
 
 }

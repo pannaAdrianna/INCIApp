@@ -49,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
     public void onBtnSearchIngredient(View view) {
-//        Intent intent = new Intent(this, CheckIngredientsActivity.class);
+        Intent intent = new Intent(this, CheckIngredientsActivity.class);
+        this.startActivity(intent);
+    }
+
+    public void onBtnAnalyzeClick(View view) {
         Intent intent = new Intent(this, AnalyzeCosmeticActivity.class);
         this.startActivity(intent);
     }
@@ -102,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
 
 }

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnOCRClick(View view) {
-        Intent intent = new Intent(this, OCRActivity.class);
+        Intent intent = new Intent(this, CheckIngredientsActivity.class);
         this.startActivity(intent);
     }
 }

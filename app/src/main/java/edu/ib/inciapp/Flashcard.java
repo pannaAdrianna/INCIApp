@@ -29,7 +29,7 @@ public class Flashcard {
 
     @Override
     public String toString() {
-        return "Label:" + label + "function: " + function + "description: " + description;
+        return "Label:" + label + "\nfunction: " + function + "description: " + description;
 
     }
 }

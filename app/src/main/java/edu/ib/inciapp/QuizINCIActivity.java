@@ -68,7 +68,13 @@ public class QuizINCIActivity extends AppCompatActivity {
             insertStatement.bindString(2, "funkcja");
             insertStatement.bindString(3, "Brak klasyfikacji jako substancja niebezpieczna zgodnie z przepisami chemicznymi");
             insertStatement.executeInsert();
+
+            insertStatement.bindString(1, "So");
+            insertStatement.bindString(2, "ffasas");
+            insertStatement.bindString(3, "sakjhoshdoais");
+            insertStatement.executeInsert();
             lengthOfDeck = list.size();
+            randomFlashcard();
 
 
         } else {
@@ -92,9 +98,9 @@ public class QuizINCIActivity extends AppCompatActivity {
 
             }
 
-            tvFront.setText(list.get(0).getLabel());
-            tvBack.setText(list.get(0).getBackgroundDescrpition());
             c.close();
+            tvFront.setText(list.get(currentCard).getLabel());
+            tvBack.setText(list.get(currentCard).getBackgroundDescrpition());
 
 
         }
@@ -110,6 +116,8 @@ public class QuizINCIActivity extends AppCompatActivity {
             btnNext.setOnClickListener(v -> {
                 Toast.makeText(this, "Next Question Please", LENGTH_LONG).show();
                 randomFlashcard();
+                tvFront.setText(list.get(currentCard).getLabel());
+                tvBack.setText(list.get(currentCard).getBackgroundDescrpition());
             });
         } catch (Exception e) {
             e.printStackTrace();

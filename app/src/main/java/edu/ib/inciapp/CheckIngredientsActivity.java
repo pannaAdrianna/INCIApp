@@ -50,9 +50,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
 
     private void readData() {
 
-
         InputStream is = getResources().openRawResource(R.raw.data);
-
         // Reads text from character-input stream, buffering characters for efficient reading
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, Charset.forName("UTF-8"))
@@ -70,14 +68,14 @@ public class CheckIngredientsActivity extends AppCompatActivity {
             while ((line = reader.readLine()) != null) {
                 Log.d("MyActivity", "Line: " + line);
                 // use comma as separator columns of CSV
-                String[] lineSplit = line.split("\t");
+                String[] lineSplit = line.split(";");
                 // Read the data
                 String label = lineSplit[0];
                 String function = lineSplit[1];
                 String description = lineSplit[2];
 
 
-                String sqlIngredient = "INSERT INTO INCI VALUES (?,?,?,?)";
+                String sqlIngredient = "INSERT INTO INCI VALUES (?,?,?)";
                 SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
 
                 insertStatement.bindString(1, label);

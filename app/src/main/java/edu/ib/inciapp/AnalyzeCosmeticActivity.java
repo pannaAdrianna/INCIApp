@@ -32,6 +32,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         etIngredients = (EditText) findViewById(R.id.etINCIstr);
         btnAnalyzeButton = (Button) findViewById(R.id.btnAnalyze);
         tvResult = (TextView) findViewById(R.id.tvControversialngriedients);
+        tvResult.setText("");
 
 
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
@@ -66,32 +67,32 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
 
     public void onBtnAnalyzeClick(View view) {
 
-        if (TextUtils.isEmpty(etIngredients.getText()))
+        tvResult.setText("");
+        int counter = 0;
+
+        if (TextUtils.isEmpty(etIngredients.getText())){
             Toast.makeText(this, "Add ingredients to verify", Toast.LENGTH_SHORT).show();
+        tvResult.setText("");}
         else {
             List<String> results = new ArrayList<>();
-            int counter = 0;
-            boolean flag=false;
+
 
             try {
+                boolean flag=false;
                 String[] strToAnalyze = etIngredients.toString().trim().split(",");
+                System.out.println(strToAnalyze);
                 for (String ingredient : strToAnalyze) {
-
-                   for(int i=0; i<strToAnalyze.length;i++){
-                       Log.i("flag", String.valueOf(flag));
-                       if (ingredient.equals(list.get(i).getLabel().trim())) {
-                           flag=true;
-                           counter++;
-                       }
-                   }
+                    results.add(ingredient);
                 }
 
-                tvResult.setText(String.valueOf(flag));
+//                tvResult.setText(counter+String.valueOf(flag));
+                tvResult.setText(counter);
 
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            Log.i("counter", String.valueOf(counter));
         }
     }
 

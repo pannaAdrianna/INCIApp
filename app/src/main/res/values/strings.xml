@@ -6,5 +6,6 @@
     <string name="hintBtnOCR">OCR</string>
     <string name="hintBtnShowNext">NEXT</string>
     <string name="hintTvNumberOfQuesion">Question</string>
+    <string name="hintGetDataBtn">GET DATA</string>
 
 </resources>

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -45,6 +47,26 @@ public class CheckIngredientsActivity extends AppCompatActivity {
 
     public void onBtnExcelClick(View view) {
         readData();
+
+        ArrayList<String> wyniki = new ArrayList<>();
+        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI",null);
+
+        if(c.moveToFirst()){
+
+            do {
+                String name= c.getString(c.getColumnIndex("Name"));
+                String function = c.getString(c.getColumnIndex("Function"));
+                String description= c.getString(c.getColumnIndex("Description"));
+
+                wyniki.add(name+": "+function+" "+description);
+
+            } while(c.moveToNext());
+        }
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,wyniki);
+        listView.setAdapter(adapter);
+        c.close();
     }
 
 

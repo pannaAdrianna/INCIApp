@@ -1,11 +1,9 @@
 package edu.ib.inciapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,14 +19,14 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class QuizINCIActivity extends AppCompatActivity {
 
-    Button btnTrue;
-    Button btnFalse;
+
     Button btnNext;
     TextView tvFront;
     TextView tvBack;
     private int currentCard;
     private int lengthOfDeck;
     SQLiteDatabase database;
+    List<Flashcard> list;
 
 
     @Override
@@ -36,14 +34,13 @@ public class QuizINCIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_i_n_c_i);
 
-        btnTrue = (Button) findViewById(R.id.btnTrue);
-        btnFalse = (Button) findViewById(R.id.btnFalse);
         btnNext = (Button) findViewById(R.id.btnNext);
-        btnNext.setVisibility(View.INVISIBLE);
+
         tvFront = (TextView) findViewById(R.id.tvName);
         tvBack = (TextView) findViewById(R.id.tvDescription);
 
-        List<Flashcard> list = new ArrayList<>();
+
+        list = new ArrayList<>();
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
         String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);
@@ -53,9 +50,11 @@ public class QuizINCIActivity extends AppCompatActivity {
         cursor.moveToFirst();
         lengthOfDeck = cursor.getInt(0);
         cursor.close();
+        currentCard= randomFlashcard(lengthOfDeck);
+
 
         if (lengthOfDeck == 0) {
-            Toast.makeText(this, "Add data", Toast.LENGTH_LONG).show();
+/*            Toast.makeText(this, "Add data", Toast.LENGTH_LONG).show();
             String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
             SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
 
@@ -72,17 +71,11 @@ public class QuizINCIActivity extends AppCompatActivity {
             insertStatement.bindString(1, "So");
             insertStatement.bindString(2, "ffasas");
             insertStatement.bindString(3, "sakjhoshdoais");
-            insertStatement.executeInsert();
-            lengthOfDeck = list.size();
-            randomFlashcard();
-
+            insertStatement.executeInsert();*/
 
         } else {
-            lengthOfDeck = list.size();
-            Log.i("Number of Flashcards", String.valueOf(lengthOfDeck));
-            randomFlashcard();
 
-            Cursor c = database.rawQuery("SELECT DISTINCT Name, Function, Description FROM INCI", null);
+            Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI", null);
 
             if (c.moveToFirst()) {
 
@@ -106,32 +99,28 @@ public class QuizINCIActivity extends AppCompatActivity {
         }
 
 
-        try {
-            btnTrue.setOnClickListener(v -> {
-                btnNext.setVisibility(View.VISIBLE);
-            });
-            btnFalse.setOnClickListener(v -> {
-                btnNext.setVisibility(View.VISIBLE);
-            });
+/*        try {
             btnNext.setOnClickListener(v -> {
                 Toast.makeText(this, "Next Question Please", LENGTH_LONG).show();
-                randomFlashcard();
-                tvFront.setText(list.get(currentCard).getLabel());
-                tvBack.setText(list.get(currentCard).getBackgroundDescrpition());
+
             });
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
-    private void randomFlashcard() {
+    private int randomFlashcard(int range) {
         Random random = new Random();
-        currentCard = random.nextInt(lengthOfDeck + 1);
+        return random.nextInt(range + 1);
+
     }
 
 
     public void onBtnNextClick(View view) {
-
+        Log.i("RANDOM", String.valueOf(currentCard));
+        Log.i("length", String.valueOf(lengthOfDeck));
+        tvFront.setText(list.get(randomFlashcard(lengthOfDeck)).getLabel());
+        tvBack.setText(list.get(randomFlashcard(lengthOfDeck)).getBackgroundDescrpition());
     }
 }

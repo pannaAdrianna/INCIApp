@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);
 
-
         readDataFromCSV();
 
     }

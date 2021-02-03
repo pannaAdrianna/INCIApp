@@ -21,7 +21,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
     Button btnAnalyzeButton;
     TextView tvResult;
     SQLiteDatabase database;
-    List<Flashcard> list;
+    List<Flashcard> ingredientList;
 
 
     @Override
@@ -44,7 +44,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         cursor.moveToFirst();
 //        lengthOfDeck = cursor.getInt(0);
         cursor.close();
-        list = new ArrayList<>();
+        ingredientList = new ArrayList<>();
 
         Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI", null);
 
@@ -56,7 +56,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
                 String description = c.getString(c.getColumnIndex("Description"));
                 Flashcard tempFlashcard = new Flashcard(name, function, description);
 
-                list.add(tempFlashcard);
+                ingredientList.add(tempFlashcard);
 
             } while (c.moveToNext());
         }
@@ -70,28 +70,29 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         tvResult.setText("");
         int counter = 0;
 
-        if (TextUtils.isEmpty(etIngredients.getText())){
+        if (TextUtils.isEmpty(etIngredients.getText())) {
             Toast.makeText(this, "Add ingredients to verify", Toast.LENGTH_SHORT).show();
-        tvResult.setText("");}
-        else {
+            tvResult.setText("");
+        } else {
             List<String> results = new ArrayList<>();
-
+            tvResult.setText(etIngredients.getText());
+            String[] strToAnalyze = etIngredients.toString().trim().split(",");
 
             try {
-                boolean flag=false;
-                String[] strToAnalyze = etIngredients.toString().trim().split(",");
-                System.out.println(strToAnalyze);
-                for (String ingredient : strToAnalyze) {
-                    results.add(ingredient);
-                }
+                boolean flag = false;
 
-//                tvResult.setText(counter+String.valueOf(flag));
-                tvResult.setText(counter);
+                for (int i = 0; i < strToAnalyze.length; i++) {
+                    for (int j = 0; j < ingredientList.size(); j++) {
+                        if (strToAnalyze[i].equalsIgnoreCase(ingredientList.get(j).getLabel().trim()))
+                            counter++;
+                    }
+                }
 
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            tvResult.setText(counter);
             Log.i("counter", String.valueOf(counter));
         }
     }

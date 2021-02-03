@@ -22,6 +22,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
     TextView tvResult;
     SQLiteDatabase database;
     List<Flashcard> ingredientList;
+    boolean flag;
 
 
     @Override
@@ -69,30 +70,37 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
 
         tvResult.setText("");
         int counter = 0;
+        flag = false;
 
         if (TextUtils.isEmpty(etIngredients.getText())) {
             Toast.makeText(this, "Add ingredients to verify", Toast.LENGTH_SHORT).show();
             tvResult.setText("");
         } else {
             List<String> results = new ArrayList<>();
-            tvResult.setText(etIngredients.getText());
-            String[] strToAnalyze = etIngredients.toString().trim().split(",");
+
+
+            String[] strToAnalyze = etIngredients.getText().toString().replaceAll(" ", "").trim().split(",");
 
             try {
-                boolean flag = false;
 
-                for (int i = 0; i < strToAnalyze.length; i++) {
-                    for (int j = 0; j < ingredientList.size(); j++) {
-                        if (strToAnalyze[i].equalsIgnoreCase(ingredientList.get(j).getLabel().trim()))
+                for (String ingredient : strToAnalyze
+                ) {
+                    for (Flashcard cmpIng :
+                            ingredientList) {
+                        if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
                             counter++;
-                    }
-                }
+                            flag = true;
+                            results.add(ingredient);
+                        }
 
+                    }
+
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            tvResult.setText(counter);
+            tvResult.setText(results.toString());
             Log.i("counter", String.valueOf(counter));
         }
     }

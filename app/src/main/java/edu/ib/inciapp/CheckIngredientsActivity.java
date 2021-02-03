@@ -22,7 +22,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
     SQLiteDatabase database;
     private int lengthOfDeck;
     List<Flashcard> list = new ArrayList<>();
-    TextView tvDisplay = (TextView) findViewById(R.id.tvDisplay);
+//    TextView tvDisplay = (TextView) findViewById(R.id.tvDisplay);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
                 String description = lineSplit[2];
 
 
-                String sqlIngredient = "INSERT INTO INCI VALUES (?,?,?)";
+                String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
                 SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
 
                 insertStatement.bindString(1, label);

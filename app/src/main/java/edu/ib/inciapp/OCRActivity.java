@@ -19,10 +19,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -49,6 +51,9 @@ public class OCRActivity extends AppCompatActivity {
 
     Uri image_uri;
 
+
+    public final static String MESSAGE = "MESSAGE"; //used as id to another activity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,16 @@ public class OCRActivity extends AppCompatActivity {
         storagePermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     }
+
+    //go to activity to Check INCI
+    public void onBtnAnalyzeClick(View view) {
+
+        Intent intent = new Intent(this, AnalyzeCosmeticActivity.class);
+        intent.putExtra(MESSAGE, mResultEt.getText().toString());
+        startActivity(intent);
+
+    }
+
 
     //pasek menu
     @Override
@@ -249,4 +264,6 @@ public class OCRActivity extends AppCompatActivity {
         }
 
     }
+
+
 }

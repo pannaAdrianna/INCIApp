@@ -2,6 +2,7 @@ package edu.ib.inciapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,11 +31,15 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze_cosmetic);
 
+
         etIngredients = (EditText) findViewById(R.id.etINCIstr);
         btnAnalyzeButton = (Button) findViewById(R.id.btnAnalyze);
         tvResult = (TextView) findViewById(R.id.tvControversialngriedients);
         tvResult.setText("");
 
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(OCRActivity.MESSAGE);
+        etIngredients.setText(message);
 
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
         String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
@@ -68,7 +73,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
 
     public void onBtnAnalyzeClick(View view) {
 
-        tvResult.setText("");
+
         int counter = 0;
         flag = false;
 

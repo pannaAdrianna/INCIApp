@@ -7,20 +7,18 @@
     tools:context=".MainActivity">
 
 
-
-
     <Button
         android:id="@+id/btnLearn"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:onClick="onBtnLearnClick"
         android:text="@string/btnLearn"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.395" />
 
     <Button
         android:id="@+id/btnOCR"
@@ -28,35 +26,37 @@
         android:layout_height="wrap_content"
         android:onClick="onBtnOCRClick"
         android:text="@string/hintBtnOCR"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAnalyzeINCI"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/btnSearchIngredient"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:onClick="onBtnSearchIngredient"
         android:text="@string/hintGetDataBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLearn"
-        app:layout_constraintVertical_bias="0.204" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/btnAnalyzeINCI"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:onClick="onBtnAnalyzeClick"
+        android:layout_margin="5dp"
         android:text="@string/btnAnalyzeCosmetic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSearchIngredient"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

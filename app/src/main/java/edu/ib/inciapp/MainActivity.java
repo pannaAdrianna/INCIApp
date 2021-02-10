@@ -21,8 +21,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main class for INCIApp
+ * @author Adrianna Boczzr
+ */
 public class MainActivity extends AppCompatActivity {
-    TextView tv;
     SQLiteDatabase database;
 
     @Override
@@ -38,27 +41,49 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * method moves user to QuizINCIActivity
+     * @see QuizINCIActivity
+     * @param view current view
+     */
     public void onBtnLearnClick(View view) {
         Intent intent = new Intent(this, QuizINCIActivity.class);
         this.startActivity(intent);
     }
 
+    /**
+     * method moves user to OCRActivity
+     * @see OCRActivity
+     * @param view
+     */
     public void onBtnOCRClick(View view) {
         Intent intent = new Intent(this, OCRActivity.class);
         this.startActivity(intent);
     }
+
+    /**
+     * method moves user to CheckIngredientsActivity
+     * @see CheckIngredientsActivity
+     * @param view
+     */
     public void onBtnSearchIngredient(View view) {
         Intent intent = new Intent(this, CheckIngredientsActivity.class);
         this.startActivity(intent);
     }
 
+    /**
+     * method moves user to AnalyzeCosmeticActivity
+     * @see AnalyzeCosmeticActivity
+     * @param view
+     */
     public void onBtnAnalyzeClick(View view) {
         Intent intent = new Intent(this, AnalyzeCosmeticActivity.class);
         this.startActivity(intent);
     }
 
-
+    /**
+     * method imports data from csv file (from res/raw folder) and adds it to SQLiteDatabase
+     */
     private void readDataFromCSV() {
 
         List<Flashcard> list = new ArrayList<>();

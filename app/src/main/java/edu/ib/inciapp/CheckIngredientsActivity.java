@@ -22,6 +22,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class is responsible of showing controversial ingredients in lis view
+ */
 public class CheckIngredientsActivity extends AppCompatActivity {
     SQLiteDatabase database;
     private int lengthOfDeck;
@@ -32,6 +35,11 @@ public class CheckIngredientsActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
 
 
+    /**
+     *  method shows list of controversial ingredients in lis view,
+     *  allows to search in list
+     * @param savedInstanceState existing instance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

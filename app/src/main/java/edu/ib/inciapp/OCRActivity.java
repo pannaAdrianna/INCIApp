@@ -35,6 +35,9 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+/**
+ * OCRActivity class is responsible of camera text recognition
+ */
 public class OCRActivity extends AppCompatActivity {
 
     EditText mResultEt;
@@ -54,6 +57,10 @@ public class OCRActivity extends AppCompatActivity {
 
     public final static String MESSAGE = "MESSAGE"; //used as id to another activity
 
+    /**
+     * method assign values to fields, asks for camera and storage permission
+     * @param savedInstanceState saved instance of the app
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +78,11 @@ public class OCRActivity extends AppCompatActivity {
 
     }
 
-    //go to activity to Check INCI
+    /**
+     * method moves activity to AnalyzeCosmeticActivity
+     * @see AnalyzeCosmeticActivity
+     * @param view current view
+     */
     public void onBtnAnalyzeClick(View view) {
 
         Intent intent = new Intent(this, AnalyzeCosmeticActivity.class);
@@ -81,7 +92,11 @@ public class OCRActivity extends AppCompatActivity {
     }
 
 
-    //pasek menu
+    /**
+     * method checks if there is menu
+     * @param menu menu of searchbar
+     * @return true, false
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_ocr_main, menu);
@@ -89,7 +104,11 @@ public class OCRActivity extends AppCompatActivity {
     }
 
 
-    //on action
+    /**
+     * method returns true if there is click on certain item
+     * @param item slected item from MenuItem
+     * @return true, false
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -102,6 +121,9 @@ public class OCRActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * method asks for permission of the camera, storage (if there isn't) or open camera/storage if there is
+     */
     private void showImageImportDialog() {
         String[] items = {" Camera", " Gallery"};
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -142,15 +164,24 @@ public class OCRActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * method asks for permission to storage
+     */
     private void requestStoragePermission() {
         ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
     }
 
+    /**
+     * method asks if there is permission to write files
+     * @return true if there is active permission
+     */
     private boolean checkStoragePermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
     }
 
-
+    /**
+     * method turn on camera
+     */
     private void pickCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "OCRpicture");
@@ -162,12 +193,19 @@ public class OCRActivity extends AppCompatActivity {
         startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE);
     }
 
+    /**
+     * method asks for a permission to turn on camera
+     */
     private void requestCameraPermission() {
         // can run the camera and save to gallery
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
 
     }
 
+    /**
+     * method asks if there is permission to write files (save image) and open camera
+     * @return true if there is active permission to open camera and write files
+     */
     private boolean checkCameraPermission() {
         boolean resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
         boolean resultWrite = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
@@ -175,6 +213,12 @@ public class OCRActivity extends AppCompatActivity {
         return resultCamera && resultWrite;
     }
 
+    /**
+     * method checks it there are all the permission granted
+     * @param requestCode number to check if there is permission
+     * @param permissions string of permissions
+     * @param grantResults array of permission to check if there is permission to use camera ot storage
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -206,8 +250,14 @@ public class OCRActivity extends AppCompatActivity {
     }
 
 
-    //image from camera, gallery
 
+
+    /**
+     * method is the base method to open camera or storage and take photo, cropped it and set it to image view field, and its text to editText field
+     * @param requestCode integer number (to check if there is permission)
+     * @param resultCode integer number
+     * @param data intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 

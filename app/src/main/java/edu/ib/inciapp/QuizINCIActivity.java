@@ -17,6 +17,9 @@ import java.util.Random;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+/**
+ * class is responsible for creating Flashcards view
+ */
 public class QuizINCIActivity extends AppCompatActivity {
 
 
@@ -28,7 +31,10 @@ public class QuizINCIActivity extends AppCompatActivity {
     SQLiteDatabase database;
     List<Flashcard> list;
 
-
+    /**
+     * method creates activity and function for current view
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +56,14 @@ public class QuizINCIActivity extends AppCompatActivity {
         cursor.moveToFirst();
         lengthOfDeck = cursor.getInt(0);
         cursor.close();
-        currentCard= randomFlashcard(lengthOfDeck);
+        currentCard = randomFlashcard(lengthOfDeck);
 
 
         if (lengthOfDeck == 0) {
-          Toast.makeText(this, "No data", Toast.LENGTH_LONG).show();
-         /*     String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
+            Toast.makeText(this, "No data", Toast.LENGTH_LONG).show();
+         /*
+//         Checking SQLdata
+         String sqlIngredient = "INSERT OR REPLACE INTO INCI VALUES (?,?,?)";
             SQLiteStatement insertStatement = database.compileStatement(sqlIngredient);
 
             insertStatement.bindString(1, "Aqua");
@@ -100,6 +108,11 @@ public class QuizINCIActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * method returns int number to draw from list
+     * @param range size of deck
+     * @return int number (index of List)
+     */
     private int randomFlashcard(int range) {
         Random random = new Random();
         Log.i("RANDOM", String.valueOf(currentCard));
@@ -109,7 +122,10 @@ public class QuizINCIActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * method draw the next crad on button next click
+     * @param view current view
+     */
     public void onBtnNextClick(View view) {
         tvFront.setText(list.get(randomFlashcard(lengthOfDeck)).getLabel());
         tvBack.setText(list.get(randomFlashcard(lengthOfDeck)).getBackgroundDescrpition());

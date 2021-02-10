@@ -17,6 +17,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class analyze cosmetic by given text
+ */
 public class AnalyzeCosmeticActivity extends AppCompatActivity {
     EditText etIngredients;
     Button btnAnalyzeButton;
@@ -25,7 +28,11 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
     List<Flashcard> ingredientList;
     boolean flag;
 
-
+    /**
+     * method reads data from existing Table and creates Flashcard List object
+     * @see MainActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +77,11 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * method reads text from editText, analyze and returns result in a textView (the controversial ones)
+     * uses data drom database
+     * @param view current view
+     */
     public void onBtnAnalyzeClick(View view) {
 
 

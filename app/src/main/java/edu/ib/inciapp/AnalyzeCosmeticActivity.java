@@ -148,9 +148,9 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            StringBuilder resultt = new StringBuilder();
-            for (String str : results) resultt.append(str + ", ");
-            tvResult.setText(resultt);
+            StringBuilder resultDisplay = new StringBuilder();
+            for (String str : results) resultDisplay.append(str + ", ");
+            tvResult.setText(resultDisplay);
 
         }
     }

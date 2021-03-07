@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".CheckIngredientsActivity">
 
+
+    <Switch
+        android:id="@+id/preggoSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:layout_weight="1"
+        android:text="Pregnant Mode" />
 
     <SearchView
         android:id="@+id/search_bar"
@@ -14,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="2sp"
         app:iconifiedByDefault="false"
-        app:queryHint="Search ingredient"></SearchView>
+        app:queryHint="Search ingredient">
+
+    </SearchView>
 
     <ListView
         android:id="@+id/listView"

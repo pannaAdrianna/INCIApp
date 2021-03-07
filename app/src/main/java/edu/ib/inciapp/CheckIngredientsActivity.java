@@ -4,23 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Switch;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * class is responsible of showing controversial ingredients in lis view
@@ -29,15 +23,20 @@ public class CheckIngredientsActivity extends AppCompatActivity {
     SQLiteDatabase database;
     private int lengthOfDeck;
 
-
+    // initiate a Switch
+    Switch switcher;
     ListView listView;
     SearchView searchView;
     ArrayAdapter<String> adapter;
-
+    ArrayAdapter<String> adapterPreggo;
+    // check current state of a Switch (true or false).
+    ArrayList<String> result = new ArrayList<>();
+    ArrayList<String> resultPreggo = new ArrayList<>();
 
     /**
-     *  method shows list of controversial ingredients in lis view,
-     *  allows to search in list
+     * method shows list of controversial ingredients in lis view,
+     * allows to search in list
+     *
      * @param savedInstanceState existing instance
      */
     @Override
@@ -46,21 +45,23 @@ public class CheckIngredientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check_ingredients);
 
         searchView = findViewById(R.id.search_bar);
+        switcher = (Switch) findViewById(R.id.preggoSwitch);
 
 
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
-        String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
+        String sqlDB = "CREATE TABLE IF NOT EXISTS ingredients(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);
 
-        String sqlCount = "SELECT count(*) FROM INCI";
+        String sqlCount = "SELECT count(*) FROM ingredients";
         Cursor cursor = database.rawQuery(sqlCount, null);
         cursor.moveToFirst();
         lengthOfDeck = cursor.getInt(0);
+        String sqlPreggo = "CREATE TABLE IF NOT EXISTS preggo(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
+        database.execSQL(sqlPreggo);
         cursor.close();
 
-
-        ArrayList<String> wyniki = new ArrayList<>();
-        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI", null);
+        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM ingredients", null);
+        Cursor c2 = database.rawQuery("SELECT Name, Function, Description FROM preggo", null);
 
         if (c.moveToFirst()) {
 
@@ -69,26 +70,54 @@ public class CheckIngredientsActivity extends AppCompatActivity {
                 String function = c.getString(c.getColumnIndex("Function"));
                 String description = c.getString(c.getColumnIndex("Description"));
 
-                wyniki.add(name + ": " + function + " " + description);
+                result.add(name + ": " + function + " " + description);
+                resultPreggo.add(name + ": " + function + " " + description);
 
             } while (c.moveToNext());
         }
+        c.close();
+        if (c2.moveToFirst()) {
+
+            do {
+                String name = c2.getString(c2.getColumnIndex("Name"));
+                String function = c2.getString(c2.getColumnIndex("Function"));
+                String description = c2.getString(c2.getColumnIndex("Description"));
+
+                resultPreggo.add(name + ": " + function + " " + description);
+
+            } while (c2.moveToNext());
+        }
+        c2.close();
+
 
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, wyniki);
+        if (!switcher.isChecked())
+            adapter = adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, result);
+        else
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, resultPreggo);
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CheckIngredientsActivity.this, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CheckIngredientsActivity.this, "" + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                System.out.println("onSwitchClicked");
+                if (switcher.isChecked())
+                    adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, resultPreggo);
+                else adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, result);
+                listView.setAdapter(adapter);
             }
         });
 
         //ustawienie filtrów
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
 
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -104,12 +133,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
         });
 
 
-        c.close();
-
-
     }
-
-
 
 
 

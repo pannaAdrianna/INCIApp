@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,12 +27,15 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
     TextView tvResult;
     SQLiteDatabase database;
     List<Flashcard> ingredientList;
+    List<Flashcard> preggoList;
     boolean flag;
+    CheckBox checkBox;
 
     /**
      * method reads data from existing Table and creates Flashcard List object
-     * @see MainActivity
+     *
      * @param savedInstanceState
+     * @see MainActivity
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         btnAnalyzeButton = (Button) findViewById(R.id.btnAnalyze);
         tvResult = (TextView) findViewById(R.id.tvControversialngriedients);
         tvResult.setText("");
+        checkBox = (CheckBox) findViewById(R.id.cbPreggo);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(OCRActivity.MESSAGE);
@@ -55,9 +60,9 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         String sqlCount = "SELECT count(*) FROM INCI";
         Cursor cursor = database.rawQuery(sqlCount, null);
         cursor.moveToFirst();
-//        lengthOfDeck = cursor.getInt(0);
         cursor.close();
         ingredientList = new ArrayList<>();
+        preggoList = new ArrayList<>();
 
         Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI", null);
 
@@ -75,11 +80,37 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         }
 
 
+        sqlDB = "CREATE TABLE IF NOT EXISTS INCIpreggo(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
+        database.execSQL(sqlDB);
+
+        sqlCount = "SELECT count(*) FROM INCIpreggo";
+        cursor = database.rawQuery(sqlCount, null);
+        cursor.moveToFirst();
+        cursor.close();
+        ingredientList = new ArrayList<>();
+
+        c = database.rawQuery("SELECT Name, Function, Description FROM INCIpreggo", null);
+
+        if (c.moveToFirst()) {
+
+            do {
+                String name = c.getString(c.getColumnIndex("Name"));
+                String function = c.getString(c.getColumnIndex("Function"));
+                String description = c.getString(c.getColumnIndex("Description"));
+                Flashcard tempFlashcard = new Flashcard(name, function, description);
+
+                preggoList.add(tempFlashcard);
+
+            } while (c.moveToNext());
+        }
+
+
     }
 
     /**
      * method reads text from editText, analyze and returns result in a textView (the controversial ones)
      * uses data drom database
+     *
      * @param view current view
      */
     public void onBtnAnalyzeClick(View view) {
@@ -93,8 +124,6 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
             tvResult.setText("");
         } else {
             List<String> results = new ArrayList<>();
-
-
             String[] strToAnalyze = etIngredients.getText().toString().replaceAll(" ", "").trim().split(",");
 
             try {

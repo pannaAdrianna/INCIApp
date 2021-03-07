@@ -15,7 +15,6 @@
         android:theme="@style/Theme.INCIApp">
         <activity android:name=".AnalyzeCosmeticActivity"></activity>
         <activity android:name=".CheckIngredientsActivity" />
-        <activity android:name=".QuizINCIActivity" />
         <activity android:name=".OCRActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -26,11 +26,13 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
     EditText etIngredients;
     Button btnAnalyzeButton;
     TextView tvResult;
+    Switch switcher;
+
     SQLiteDatabase database;
     List<Flashcard> ingredientList;
     List<Flashcard> preggoList;
+
     boolean flag;
-    Switch switcher;
 
     /**
      * method reads data from existing Table and creates Flashcard List object
@@ -47,8 +49,10 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         etIngredients = (EditText) findViewById(R.id.etINCIstr);
         btnAnalyzeButton = (Button) findViewById(R.id.btnAnalyze);
         tvResult = (TextView) findViewById(R.id.tvControversialngriedients);
-        tvResult.setText("");
         switcher = findViewById(R.id.preggoSwitch);
+
+
+        tvResult.setText("");
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(OCRActivity.MESSAGE);
@@ -66,6 +70,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         preggoList = new ArrayList<>();
 
         Cursor c = database.rawQuery("SELECT Name, Function, Description FROM ingredients", null);
+        Cursor c2 = database.rawQuery("SELECT Name, Function, Description FROM preggo", null);
 
         if (c.moveToFirst()) {
 
@@ -73,37 +78,25 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
                 String name = c.getString(c.getColumnIndex("Name"));
                 String function = c.getString(c.getColumnIndex("Function"));
                 String description = c.getString(c.getColumnIndex("Description"));
-                Flashcard tempFlashcard = new Flashcard(name, function, description);
 
-                ingredientList.add(tempFlashcard);
+                ingredientList.add(new Flashcard(name, function, description));
+                preggoList.add(new Flashcard(name, function, description));
+
 
             } while (c.moveToNext());
         }
-
-
-        sqlDB = "CREATE TABLE IF NOT EXISTS preggo(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
-        database.execSQL(sqlDB);
-
-        sqlCount = "SELECT count(*) FROM preggo";
-        cursor = database.rawQuery(sqlCount, null);
-        cursor.moveToFirst();
-        cursor.close();
-        ingredientList = new ArrayList<>();
-
-        c = database.rawQuery("SELECT Name, Function, Description FROM preggo", null);
-
-        if (c.moveToFirst()) {
+        c.close();
+        if (c2.moveToFirst()) {
 
             do {
-                String name = c.getString(c.getColumnIndex("Name"));
-                String function = c.getString(c.getColumnIndex("Function"));
-                String description = c.getString(c.getColumnIndex("Description"));
-                Flashcard tempFlashcard = new Flashcard(name, function, description);
+                String name = c2.getString(c2.getColumnIndex("Name"));
+                String function = c2.getString(c2.getColumnIndex("Function"));
+                String description = c2.getString(c2.getColumnIndex("Description"));
 
-                preggoList.add(tempFlashcard);
-
-            } while (c.moveToNext());
+                preggoList.add(new Flashcard(name, function, description));
+            } while (c2.moveToNext());
         }
+        c2.close();
 
 
     }
@@ -125,21 +118,36 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
             tvResult.setText("");
         } else {
             List<String> results = new ArrayList<>();
+
+
             String[] strToAnalyze = etIngredients.getText().toString().replaceAll(" ", "").trim().split(",");
 
             try {
 
                 for (String ingredient : strToAnalyze
                 ) {
-                    for (Flashcard cmpIng :
-                            ingredientList) {
-                        if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
-                            counter++;
-                            flag = true;
-                            results.add(ingredient);
-                        }
+                    if(switcher.isChecked()){
+                        for (Flashcard cmpIng :
+                                preggoList) {
+                            if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
+                                counter++;
+                                flag = true;
+                                results.add(ingredient);
+                            }
 
+                        }
+                    }else{
+                        for (Flashcard cmpIng :
+                                ingredientList) {
+                            if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
+                                counter++;
+                                flag = true;
+                                results.add(ingredient);
+                            }
+
+                        }
                     }
+
 
                 }
 

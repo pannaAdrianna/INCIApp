@@ -28,7 +28,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
     ListView listView;
     SearchView searchView;
     ArrayAdapter<String> adapter;
-    ArrayAdapter<String> adapterPreggo;
+
     // check current state of a Switch (true or false).
     ArrayList<String> result = new ArrayList<>();
     ArrayList<String> resultPreggo = new ArrayList<>();
@@ -70,8 +70,8 @@ public class CheckIngredientsActivity extends AppCompatActivity {
                 String function = c.getString(c.getColumnIndex("Function"));
                 String description = c.getString(c.getColumnIndex("Description"));
 
-                result.add(name + ": " + function + " " + description);
-                resultPreggo.add(name + ": " + function + " " + description);
+                result.add(name + ": " + function + ", " + description);
+                resultPreggo.add(name + ": " + function + ", " + description);
 
             } while (c.moveToNext());
         }
@@ -83,7 +83,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
                 String function = c2.getString(c2.getColumnIndex("Function"));
                 String description = c2.getString(c2.getColumnIndex("Description"));
 
-                resultPreggo.add(name + ": " + function + " " + description);
+                resultPreggo.add(name + ": " + function + ",    " + description);
 
             } while (c2.moveToNext());
         }

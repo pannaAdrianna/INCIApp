@@ -27,7 +27,8 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
     SQLiteDatabase database;
-
+    List<Flashcard> ingredientsList = new ArrayList<>();
+    List<Flashcard> preggo = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         database.execSQL(sqlPreggo);
 
         readDataFromCSV();
+
+
 
     }
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private void readDataFromCSV() {
 
         //basic ingredients
-        List<Flashcard> ingredientsList = new ArrayList<>();
+
 
         InputStream is = getResources().openRawResource(R.raw.data);
         BufferedReader reader = new BufferedReader(
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        List<Flashcard> preggo = new ArrayList<>();
+
 
         InputStream is2 = getResources().openRawResource(R.raw.preggo);
         BufferedReader reader2 = new BufferedReader(

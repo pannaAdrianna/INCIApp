@@ -113,7 +113,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         List<String> results = new ArrayList<>();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        int counter = 0;
+
         flag = false;
 
         if (TextUtils.isEmpty(etIngredients.getText())) {
@@ -126,22 +126,17 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
 
                 for (String ingredient : strToAnalyze
                 ) {
-
                     for (Flashcard cmpIng :
                             ingredientList) {
-                        if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
-                            counter++;
-                            flag = true;
-                            results.add(ingredient);
+                        if (ingredient.equalsIgnoreCase(cmpIng.getLabel().replaceAll(" ", "").trim())) {
+                            results.add(cmpIng.getLabel());
                         }
                     }
                     if (switcher.isChecked()) {
                         for (Flashcard cmpIng :
                                 preggoList) {
-                            if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
-                                counter++;
-                                flag = true;
-                                if (!results.contains(ingredient)) results.add(ingredient);
+                            if (ingredient.equalsIgnoreCase(cmpIng.getLabel().replaceAll(" ", "").trim())) {
+                                if(!results.contains(cmpIng.getLabel())) results.add(cmpIng.getLabel());
                             }
 
                         }
@@ -153,8 +148,10 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            tvResult.setText(results.toString());
-            Log.i("counter", String.valueOf(counter));
+            StringBuilder resultt = new StringBuilder();
+            for (String str : results) resultt.append(str + ", ");
+            tvResult.setText(resultt);
+
         }
     }
 

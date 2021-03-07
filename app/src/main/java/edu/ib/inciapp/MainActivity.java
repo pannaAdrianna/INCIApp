@@ -81,9 +81,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void readDataFromCSV() {
 
-        //basic ingredients
-
-
         InputStream is = getResources().openRawResource(R.raw.data);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, Charset.forName("UTF-8"))

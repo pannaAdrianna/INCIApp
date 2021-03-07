@@ -2,6 +2,7 @@ package edu.ib.inciapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -80,7 +82,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
                 String description = c.getString(c.getColumnIndex("Description"));
 
                 ingredientList.add(new Flashcard(name, function, description));
-                preggoList.add(new Flashcard(name, function, description));
+//                preggoList.add(new Flashcard(name, function, description));
 
 
             } while (c.moveToNext());
@@ -108,8 +110,9 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
      * @param view current view
      */
     public void onBtnAnalyzeClick(View view) {
-
-
+        List<String> results = new ArrayList<>();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         int counter = 0;
         flag = false;
 
@@ -117,40 +120,36 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
             Toast.makeText(this, "Add ingredients to verify", Toast.LENGTH_SHORT).show();
             tvResult.setText("");
         } else {
-            List<String> results = new ArrayList<>();
-
-
             String[] strToAnalyze = etIngredients.getText().toString().replaceAll(" ", "").trim().split(",");
 
             try {
 
                 for (String ingredient : strToAnalyze
                 ) {
-                    if(switcher.isChecked()){
+
+                    for (Flashcard cmpIng :
+                            ingredientList) {
+                        if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
+                            counter++;
+                            flag = true;
+                            results.add(ingredient);
+                        }
+                    }
+                    if (switcher.isChecked()) {
                         for (Flashcard cmpIng :
                                 preggoList) {
                             if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
                                 counter++;
                                 flag = true;
-                                results.add(ingredient);
+                                if (!results.contains(ingredient)) results.add(ingredient);
                             }
 
                         }
-                    }else{
-                        for (Flashcard cmpIng :
-                                ingredientList) {
-                            if (ingredient.equalsIgnoreCase(cmpIng.getLabel().trim())) {
-                                counter++;
-                                flag = true;
-                                results.add(ingredient);
-                            }
 
-                        }
+
                     }
 
-
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -15,6 +15,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * class is responsible of showing controversial ingredients in lis view
@@ -76,6 +77,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
             } while (c.moveToNext());
         }
         c.close();
+
         if (c2.moveToFirst()) {
 
             do {
@@ -83,11 +85,13 @@ public class CheckIngredientsActivity extends AppCompatActivity {
                 String function = c2.getString(c2.getColumnIndex("Function"));
                 String description = c2.getString(c2.getColumnIndex("Description"));
 
-                resultPreggo.add(name + ": " + function + ",    " + description);
+                resultPreggo.add(name + ": " + function + ", " + description);
 
             } while (c2.moveToNext());
         }
         c2.close();
+
+
 
 
         listView = (ListView) findViewById(R.id.listView);
@@ -97,6 +101,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, resultPreggo);
 
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

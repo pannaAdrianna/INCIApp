@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
     List<Flashcard> ingredientList;
     List<Flashcard> preggoList;
     boolean flag;
-    CheckBox checkBox;
+    Switch switcher;
 
     /**
      * method reads data from existing Table and creates Flashcard List object
@@ -47,24 +48,24 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         btnAnalyzeButton = (Button) findViewById(R.id.btnAnalyze);
         tvResult = (TextView) findViewById(R.id.tvControversialngriedients);
         tvResult.setText("");
-        checkBox = (CheckBox) findViewById(R.id.cbPreggo);
+        switcher = findViewById(R.id.preggoSwitch);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(OCRActivity.MESSAGE);
         etIngredients.setText(message);
 
         database = openOrCreateDatabase("INCIdb", MODE_PRIVATE, null);
-        String sqlDB = "CREATE TABLE IF NOT EXISTS INCI(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
+        String sqlDB = "CREATE TABLE IF NOT EXISTS ingredients(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);
 
-        String sqlCount = "SELECT count(*) FROM INCI";
+        String sqlCount = "SELECT count(*) FROM ingredients";
         Cursor cursor = database.rawQuery(sqlCount, null);
         cursor.moveToFirst();
         cursor.close();
         ingredientList = new ArrayList<>();
         preggoList = new ArrayList<>();
 
-        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM INCI", null);
+        Cursor c = database.rawQuery("SELECT Name, Function, Description FROM ingredients", null);
 
         if (c.moveToFirst()) {
 
@@ -80,16 +81,16 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         }
 
 
-        sqlDB = "CREATE TABLE IF NOT EXISTS INCIpreggo(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
+        sqlDB = "CREATE TABLE IF NOT EXISTS preggo(Name VARCHAR PRIMARY KEY, Function VARCHAR, Description VARCHAR)";
         database.execSQL(sqlDB);
 
-        sqlCount = "SELECT count(*) FROM INCIpreggo";
+        sqlCount = "SELECT count(*) FROM preggo";
         cursor = database.rawQuery(sqlCount, null);
         cursor.moveToFirst();
         cursor.close();
         ingredientList = new ArrayList<>();
 
-        c = database.rawQuery("SELECT Name, Function, Description FROM INCIpreggo", null);
+        c = database.rawQuery("SELECT Name, Function, Description FROM preggo", null);
 
         if (c.moveToFirst()) {
 

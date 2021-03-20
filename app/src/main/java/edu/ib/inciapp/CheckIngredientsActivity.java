@@ -45,6 +45,7 @@ public class CheckIngredientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_ingredients);
 
+
         searchView = findViewById(R.id.search_bar);
         switcher = (Switch) findViewById(R.id.preggoSwitch);
 

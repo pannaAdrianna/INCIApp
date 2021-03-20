@@ -65,6 +65,8 @@ public class OCRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_o_c_r);
+
+
         mResultEt = findViewById(R.id.resultEt);
         mPreviewIv = findViewById(R.id.ivImage);
 

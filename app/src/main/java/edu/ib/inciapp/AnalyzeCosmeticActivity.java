@@ -47,6 +47,8 @@ public class AnalyzeCosmeticActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze_cosmetic);
 
+        getSupportActionBar().setTitle("Analyze");
+
 
         etIngredients = (EditText) findViewById(R.id.etINCIstr);
         btnAnalyzeButton = (Button) findViewById(R.id.btnAnalyze);

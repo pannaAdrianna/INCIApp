@@ -12,10 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * class is responsible of showing controversial ingredients in lis view
@@ -43,7 +41,9 @@ public class CheckIngredientsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_ingredients);
+        setContentView(R.layout.activity_list_ingredients);
+
+        getSupportActionBar().setTitle("Ingredient List");
 
 
         searchView = findViewById(R.id.search_bar);

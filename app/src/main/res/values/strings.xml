@@ -1,13 +1,11 @@
 <resources>
-    <string name="app_name">INCIApp</string>
-    <string name="hintbtnTrue">I KNEW IT</string>
-    <string name="hintbtnFalse">I DONT</string>
-    <string name="btnLearn">LEARN</string>
+    <string name="app_name">TOM_projekt</string>
     <string name="hintBtnOCR">OCR</string>
     <string name="btnAnalyzeCosmetic">ANALYZE INCI</string>
+    <string name="cbPreggo">Pregnant</string>
     <string name="hintBtnShowNext">NEXT</string>
     <string name="hintTvNumberOfQuesion">Question</string>
-    <string name="hintGetDataBtn">SEARCH FOR INGREDIENT</string>
+    <string name="hintGetDataBtn">INGREDIENT LIST</string>
     <string name="hintETIncianalyzer">Paste your INCI here</string>
     <string name="hintBtnAnalyze">ANALYZE</string>
     <string name="tvINCIpaste">INGREDIENTS:</string>
